@@ -1,0 +1,63 @@
+type LogTransferBySystem @entity {
+  id: ID!
+  token: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  by: Bytes! # address
+}
+
+type LogTransferByUser @entity {
+  id: ID!
+  token: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  by: Bytes! # address
+}
+
+type LogUserAdded @entity {
+  id: ID!
+  user: Bytes! # address
+  by: Bytes! # address
+}
+
+type LogUserRemoved @entity {
+  id: ID!
+  user: Bytes! # address
+  by: Bytes! # address
+}
+
+type LogImplChanged @entity {
+  id: ID!
+  newImpl: Bytes! # address
+  oldImpl: Bytes! # address
+}
+
+type LogError @entity {
+  id: ID!
+  methodSig: String! # string
+  errMsg: String! # string
+}
+
+type LogErrorWithHintBytes32 @entity {
+  id: ID!
+  bytes32Value: Bytes! # bytes32
+  methodSig: String! # string
+  errMsg: String! # string
+}
+
+type LogErrorWithHintAddress @entity {
+  id: ID!
+  addressValue: Bytes! # address
+  methodSig: String! # string
+  errMsg: String! # string
+}
+
+type LogNote @entity {
+  id: ID!
+  sig: Bytes! # bytes4
+  guy: Bytes! # address
+  foo: Bytes! # bytes32
+  bar: Bytes! # bytes32
+  wad: BigInt! # uint256
+  fax: Bytes! # bytes
+}

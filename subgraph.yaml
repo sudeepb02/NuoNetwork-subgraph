@@ -1,0 +1,47 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x78b37409628e10df0b661c6b205b872a4df8dd6e"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - LogTransferBySystem
+        - LogTransferByUser
+        - LogUserAdded
+        - LogUserRemoved
+        - LogImplChanged
+        - LogError
+        - LogErrorWithHintBytes32
+        - LogErrorWithHintAddress
+        - LogNote
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: LogTransferBySystem(indexed address,indexed address,uint256,address)
+          handler: handleLogTransferBySystem
+        - event: LogTransferByUser(indexed address,indexed address,uint256,address)
+          handler: handleLogTransferByUser
+        - event: LogUserAdded(indexed address,address)
+          handler: handleLogUserAdded
+        - event: LogUserRemoved(indexed address,address)
+          handler: handleLogUserRemoved
+        - event: LogImplChanged(indexed address,indexed address)
+          handler: handleLogImplChanged
+        - event: LogError(string,string)
+          handler: handleLogError
+        - event: LogErrorWithHintBytes32(indexed bytes32,string,string)
+          handler: handleLogErrorWithHintBytes32
+        - event: LogErrorWithHintAddress(indexed address,string,string)
+          handler: handleLogErrorWithHintAddress
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/mapping.ts
