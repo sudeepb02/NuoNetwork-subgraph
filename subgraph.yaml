@@ -2,15 +2,16 @@ specVersion: 0.0.1
 schema:
   file: ./schema.graphql
 dataSources:
+# Account Contract
   - kind: ethereum/contract
-    name: Contract
+    name: AccountContract
     network: mainnet
     source:
       address: "0x78b37409628e10df0b661c6b205b872a4df8dd6e"
-      abi: Contract
+      abi: AccountContract
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.2
+      apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
         - LogTransferBySystem
@@ -23,8 +24,8 @@ dataSources:
         - LogErrorWithHintAddress
         - LogNote
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: AccountContract
+          file: ./abis/AccountContract.json
       eventHandlers:
         - event: LogTransferBySystem(indexed address,indexed address,uint256,address)
           handler: handleLogTransferBySystem
@@ -44,4 +45,250 @@ dataSources:
           handler: handleLogErrorWithHintAddress
         - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
           handler: handleLogNote
-      file: ./src/mapping.ts
+      file: ./src/Accountmapping.ts
+#AccountFactory contract
+  - kind: ethereum/contract
+    name: AccountFactoryContract
+    network: mainnet
+    source:
+      address: "0xf5a38fbc26c720c79350b99d9c0bd42b3e9b8316"
+      abi: AccountFactoryContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - LogAccountCreated
+        - LogSetAuthority
+        - LogSetOwner
+        - LogNote
+      abis:
+        - name: AccountFactoryContract
+          file: ./abis/AccountFactoryContract.json
+      eventHandlers:
+        - event: LogAccountCreated(indexed address,indexed address,address)
+          handler: handleLogAccountCreated
+        - event: LogSetAuthority(indexed address)
+          handler: handleLogSetAuthority
+        - event: LogSetOwner(indexed address)
+          handler: handleLogSetOwner
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/AccountFactorymapping.ts
+# AccountFactoryV2 contract
+  - kind: ethereum/contract
+    name: AccountFactoryV2Contract
+    network: mainnet
+    source:
+      address: "0x4e9d7f37eadc6fef64b5f5dccc4deb6224667677"
+      abi: AccountFactoryV2Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - LogAccountCreated
+        - LogSetAuthority
+        - LogSetOwner
+        - LogNote
+      abis:
+        - name: AccountFactoryV2Contract
+          file: ./abis/AccountFactoryV2Contract.json
+      eventHandlers:
+        - event: LogAccountCreated(indexed address,indexed address,address)
+          handler: handleLogAccountCreated
+        - event: LogSetAuthority(indexed address)
+          handler: handleLogSetAuthority
+        - event: LogSetOwner(indexed address)
+          handler: handleLogSetOwner
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/AccountFactoryV2mapping.ts
+#COnfig contract
+  - kind: ethereum/contract
+    name: ConfigContract
+    network: mainnet
+    source:
+      address: "0x431f429035a1e3059d5c6a9a83208c6d3143d925"
+      abi: ConfigContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - LogAdminAdded
+        - LogAdminRemoved
+        - LogSetAuthority
+        - LogSetOwner
+        - LogNote
+      abis:
+        - name: ConfigContract
+          file: ./abis/ConfigContract.json
+      eventHandlers:
+        - event: LogAdminAdded(indexed address,address)
+          handler: handleLogAdminAdded
+        - event: LogAdminRemoved(indexed address,address)
+          handler: handleLogAdminRemoved
+        - event: LogSetAuthority(indexed address)
+          handler: handleLogSetAuthority
+        - event: LogSetOwner(indexed address)
+          handler: handleLogSetOwner
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/Configmapping.ts
+#Kernel contract
+  - kind: ethereum/contract
+    name: KernelContract
+    network: mainnet
+    source:
+      address: "0x8dc3bcbb4b506fa2becd065ff4425dee32f156a6"
+      abi: KernelContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - LogOrderCreated
+        - LogOrderRepaid
+        - LogOrderDefaulted
+        - LogError
+        - LogErrorWithHintBytes32
+        - LogErrorWithHintAddress
+        - LogSetAuthority
+        - LogSetOwner
+        - LogNote
+      abis:
+        - name: KernelContract
+          file: ./abis/KernelContract.json
+      eventHandlers:
+        - event: LogOrderCreated(indexed bytes32,indexed address,indexed address,address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleLogOrderCreated
+        - event: LogOrderRepaid(indexed bytes32,uint256)
+          handler: handleLogOrderRepaid
+        - event: LogOrderDefaulted(indexed bytes32,string)
+          handler: handleLogOrderDefaulted
+        - event: LogError(string,string)
+          handler: handleLogError
+        - event: LogErrorWithHintBytes32(indexed bytes32,string,string)
+          handler: handleLogErrorWithHintBytes32
+        - event: LogErrorWithHintAddress(indexed address,string,string)
+          handler: handleLogErrorWithHintAddress
+        - event: LogSetAuthority(indexed address)
+          handler: handleLogSetAuthority
+        - event: LogSetOwner(indexed address)
+          handler: handleLogSetOwner
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/Kernelmapping.ts
+#MKernel contract
+  - kind: ethereum/contract
+    name: MKernelContract
+    network: mainnet
+    source:
+      address: "0x740f8b58f5562c8379f2a8c2230c9be5c03ac3fc"
+      abi: MKernelContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - LogOrderCreated
+        - LogOrderLiquidatedByUser
+        - LogOrderStoppedAtProfit
+        - LogOrderDefaulted
+        - LogNoActionPerformed
+        - LogOrderSettlement
+        - LogError
+        - LogErrorWithHintBytes32
+        - LogErrorWithHintAddress
+        - LogSetAuthority
+        - LogSetOwner
+        - LogNote
+      abis:
+        - name: MKernelContract
+          file: ./abis/MKernelContract.json
+      eventHandlers:
+        - event: LogOrderCreated(indexed bytes32,uint256,uint256)
+          handler: handleLogOrderCreated
+        - event: LogOrderLiquidatedByUser(indexed bytes32)
+          handler: handleLogOrderLiquidatedByUser
+        - event: LogOrderStoppedAtProfit(indexed bytes32)
+          handler: handleLogOrderStoppedAtProfit
+        - event: LogOrderDefaulted(indexed bytes32,string)
+          handler: handleLogOrderDefaulted
+        - event: LogNoActionPerformed(indexed bytes32)
+          handler: handleLogNoActionPerformed
+        - event: LogOrderSettlement(indexed bytes32,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleLogOrderSettlement
+        - event: LogError(string,string)
+          handler: handleLogError
+        - event: LogErrorWithHintBytes32(indexed bytes32,string,string)
+          handler: handleLogErrorWithHintBytes32
+        - event: LogErrorWithHintAddress(indexed address,string,string)
+          handler: handleLogErrorWithHintAddress
+        - event: LogSetAuthority(indexed address)
+          handler: handleLogSetAuthority
+        - event: LogSetOwner(indexed address)
+          handler: handleLogSetOwner
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/MKernelmapping.ts
+# Reserve contract
+  - kind: ethereum/contract
+    name: ReserveContract
+    network: mainnet
+    source:
+      address: "0x64d14595152b430cf6940da15c6e39545c7c5b7e"
+      abi: ReserveContract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - LogOrderCreated
+        - LogOrderCancelled
+        - LogReserveValuesUpdated
+        - LogOrderCumulativeUpdated
+        - LogRelease
+        - LogLock
+        - LogLockSurplus
+        - LogTransferSurplus
+        - LogError
+        - LogErrorWithHintBytes32
+        - LogErrorWithHintAddress
+        - LogSetAuthority
+        - LogSetOwner
+        - LogNote
+      abis:
+        - name: ReserveContract
+          file: ./abis/ReserveContract.json
+      eventHandlers:
+        - event: LogOrderCreated(indexed bytes32,indexed address,indexed address,address,uint256,uint256)
+          handler: handleLogOrderCreated
+        - event: LogOrderCancelled(indexed bytes32,indexed address)
+          handler: handleLogOrderCancelled
+        - event: LogReserveValuesUpdated(indexed address,indexed uint256,uint256,uint256,uint256)
+          handler: handleLogReserveValuesUpdated
+        - event: LogOrderCumulativeUpdated(indexed bytes32,uint256,uint256)
+          handler: handleLogOrderCumulativeUpdated
+        - event: LogRelease(indexed address,indexed address,uint256,address)
+          handler: handleLogRelease
+        - event: LogLock(indexed address,indexed address,uint256,uint256,uint256,address)
+          handler: handleLogLock
+        - event: LogLockSurplus(indexed address,indexed address,address,uint256)
+          handler: handleLogLockSurplus
+        - event: LogTransferSurplus(indexed address,indexed address,address,uint256)
+          handler: handleLogTransferSurplus
+        - event: LogError(string,string)
+          handler: handleLogError
+        - event: LogErrorWithHintBytes32(indexed bytes32,string,string)
+          handler: handleLogErrorWithHintBytes32
+        - event: LogErrorWithHintAddress(indexed address,string,string)
+          handler: handleLogErrorWithHintAddress
+        - event: LogSetAuthority(indexed address)
+          handler: handleLogSetAuthority
+        - event: LogSetOwner(indexed address)
+          handler: handleLogSetOwner
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,uint256,bytes)
+          handler: handleLogNote
+      file: ./src/Reservemapping.ts

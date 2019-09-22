@@ -8,7 +8,7 @@ import {
   LogErrorWithHintBytes32 as LogErrorWithHintBytes32Event,
   LogErrorWithHintAddress as LogErrorWithHintAddressEvent,
   LogNote as LogNoteEvent
-} from "../generated/Contract/Contract"
+} from "../generated/AccountContract/AccountContract"
 import {
   LogTransferBySystem,
   LogTransferByUser,

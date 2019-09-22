@@ -61,3 +61,147 @@ type LogNote @entity {
   wad: BigInt! # uint256
   fax: Bytes! # bytes
 }
+
+#AccountFactoryV2
+type LogAccountCreated @entity {
+  id: ID!
+  user: Bytes! # address
+  account: Bytes! # address
+  by: Bytes! # address
+}
+
+type LogSetAuthority @entity {
+  id: ID!
+  authority: Bytes! # address
+}
+
+type LogSetOwner @entity {
+  id: ID!
+  owner: Bytes! # address
+}
+
+#Config Schema
+type LogAdminAdded @entity {
+  id: ID!
+  _admin: Bytes! # address
+  _by: Bytes! # address
+}
+
+type LogAdminRemoved @entity {
+  id: ID!
+  _admin: Bytes! # address
+  _by: Bytes! # address
+}
+#Kernel schema
+type LogOrderCreated @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+  account: Bytes! # address
+  principalToken: Bytes! # address
+  collateralToken: Bytes! # address
+  byUser: Bytes! # address
+  principalAmount: BigInt! # uint256
+  collateralAmount: BigInt! # uint256
+  premium: BigInt! # uint256
+  expirationTimestamp: BigInt! # uint256
+  fee: BigInt! # uint256
+  tradeAmount: BigInt! # uint256
+  token: Bytes! # address
+  value: BigInt! # uint256
+}
+
+type LogOrderRepaid @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+  valueRepaid: BigInt! # uint256
+}
+
+type LogOrderDefaulted @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+  reason: String! # string
+}
+
+#MKernel schema
+type LogOrderLiquidatedByUser @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+}
+
+type LogOrderStoppedAtProfit @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+}
+
+type LogNoActionPerformed @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+}
+
+type LogOrderSettlement @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+  valueRepaid: BigInt! # uint256
+  reserveProfit: BigInt! # uint256
+  reserveLoss: BigInt! # uint256
+  collateralLeft: BigInt! # uint256
+  userProfit: BigInt! # uint256
+  fee: BigInt! # uint256
+}
+
+#Reserve Schema
+
+type LogOrderCancelled @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+  by: Bytes! # address
+}
+type LogReserveValuesUpdated @entity {
+  id: ID!
+  token: Bytes! # address
+  updatedTill: BigInt! # uint256
+  reserve: BigInt! # uint256
+  profit: BigInt! # uint256
+  loss: BigInt! # uint256
+}
+
+type LogOrderCumulativeUpdated @entity {
+  id: ID!
+  orderHash: Bytes! # bytes32
+  updatedTill: BigInt! # uint256
+  value: BigInt! # uint256
+}
+
+type LogRelease @entity {
+  id: ID!
+  token: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  by: Bytes! # address
+}
+
+type LogLock @entity {
+  id: ID!
+  token: Bytes! # address
+  from: Bytes! # address
+  value: BigInt! # uint256
+  profit: BigInt! # uint256
+  loss: BigInt! # uint256
+  by: Bytes! # address
+}
+
+type LogLockSurplus @entity {
+  id: ID!
+  forToken: Bytes! # address
+  token: Bytes! # address
+  from: Bytes! # address
+  value: BigInt! # uint256
+}
+
+type LogTransferSurplus @entity {
+  id: ID!
+  forToken: Bytes! # address
+  token: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+}
