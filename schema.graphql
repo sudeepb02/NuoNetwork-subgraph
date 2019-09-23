@@ -105,9 +105,9 @@ type LogOrderCreated @entity {
   premium: BigInt! # uint256
   expirationTimestamp: BigInt! # uint256
   fee: BigInt! # uint256
-  tradeAmount: BigInt! # uint256
-  token: Bytes! # address
-  value: BigInt! # uint256
+  tradeAmount: BigInt # uint256
+  token: Bytes # address
+  value: BigInt # uint256
 }
 
 type LogOrderRepaid @entity {
@@ -204,4 +204,48 @@ type LogTransferSurplus @entity {
   token: Bytes! # address
   to: Bytes! # address
   value: BigInt! # uint256
+}
+
+#DSGuard contract
+type LogPermit @entity {
+  id: ID!
+  src: Bytes! # bytes32
+  dst: Bytes! # bytes32
+  sig: Bytes! # bytes32
+}
+
+type LogForbid @entity {
+  id: ID!
+  src: Bytes! # bytes32
+  dst: Bytes! # bytes32
+  sig: Bytes! # bytes32
+}
+
+#ReserveEscrow contract
+type LogTransfer @entity {
+  id: ID!
+  token: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+}
+
+type LogTransferFromAccount @entity {
+  id: ID!
+  account: Bytes! # address
+  token: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+}
+
+#KyberConnector contract
+type LogTrade @entity {
+  id: ID!
+  _from: Bytes! # address
+  _srcToken: Bytes! # address
+  _destToken: Bytes! # address
+  _srcTokenValue: BigInt! # uint256
+  _maxDestTokenValue: BigInt! # uint256
+  _destTokenValue: BigInt! # uint256
+  _srcTokenValueLeft: BigInt! # uint256
+  _exchangeRate: BigInt! # uint256
 }
