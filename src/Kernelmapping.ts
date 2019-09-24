@@ -42,8 +42,9 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   if (orderSummary == null) {
     orderSummary = new OrderSummary("1")
     orderSummary.totalOrdersCreated = 0
-    orderSummary.totalOrdersRepaid = 0
+    orderSummary.totalOrdersSettled = 0
     orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
   }
   orderSummary.totalOrdersCreated = orderSummary.totalOrdersCreated + 1
   orderSummary.save()
@@ -61,10 +62,11 @@ export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
   if (orderSummary == null) {
     orderSummary = new OrderSummary("1")
     orderSummary.totalOrdersCreated = 0
-    orderSummary.totalOrdersRepaid = 0
+    orderSummary.totalOrdersSettled = 0
     orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
   }
-  orderSummary.totalOrdersRepaid = orderSummary.totalOrdersRepaid + 1
+  orderSummary.totalOrdersSettled = orderSummary.totalOrdersSettled + 1
   orderSummary.save()
 
 }
@@ -81,8 +83,9 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   if (orderSummary == null) {
     orderSummary = new OrderSummary("1")
     orderSummary.totalOrdersCreated = 0
-    orderSummary.totalOrdersRepaid = 0
+    orderSummary.totalOrdersSettled = 0
     orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
   }
   orderSummary.totalOrdersDefaulted = orderSummary.totalOrdersDefaulted + 1
   orderSummary.save()

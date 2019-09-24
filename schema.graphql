@@ -259,6 +259,7 @@ type User @entity {
 type OrderSummary @entity {
   id: ID! #global ID for order summary (1)
   totalOrdersCreated: Int!
-  totalOrdersRepaid: Int!
+  totalOrdersSettled: Int!
   totalOrdersDefaulted: Int!
+  totalOrdersLiquidated: Int!
 }

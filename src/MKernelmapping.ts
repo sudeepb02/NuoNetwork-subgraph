@@ -24,7 +24,8 @@ import {
   LogErrorWithHintAddress,
   LogSetAuthority,
   LogSetOwner,
-  LogNote
+  LogNote,
+  OrderSummary
 } from "../generated/schema"
 
 export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
@@ -35,6 +36,17 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   entity.tradeAmount = event.params.tradeAmount
   entity.expirationTimestamp = event.params.expirationTimestamp
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersSettled = 0
+    orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
+  }
+  orderSummary.totalOrdersCreated = orderSummary.totalOrdersCreated + 1
+  orderSummary.save()
 }
 
 export function handleLogOrderLiquidatedByUser(
@@ -45,6 +57,18 @@ export function handleLogOrderLiquidatedByUser(
   )
   entity.orderHash = event.params.orderHash
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersSettled = 0
+    orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
+  }
+  orderSummary.totalOrdersLiquidated = orderSummary.totalOrdersLiquidated + 1
+  orderSummary.save()
+
 }
 
 export function handleLogOrderStoppedAtProfit(
@@ -64,6 +88,17 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   entity.orderHash = event.params.orderHash
   entity.reason = event.params.reason
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersSettled = 0
+    orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
+  }
+  orderSummary.totalOrdersDefaulted = orderSummary.totalOrdersDefaulted + 1
+  orderSummary.save()
 }
 
 export function handleLogNoActionPerformed(
@@ -88,6 +123,16 @@ export function handleLogOrderSettlement(event: LogOrderSettlementEvent): void {
   entity.userProfit = event.params.userProfit
   entity.fee = event.params.fee
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersSettled = 0
+    orderSummary.totalOrdersDefaulted = 0
+  }
+  orderSummary.totalOrdersSettled = orderSummary.totalOrdersSettled + 1
+  orderSummary.save()
 }
 
 export function handleLogError(event: LogErrorEvent): void {
