@@ -18,7 +18,8 @@ import {
   LogErrorWithHintAddress,
   LogSetAuthority,
   LogSetOwner,
-  LogNote
+  LogNote,
+  OrderSummary
 } from "../generated/schema"
 
 export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
@@ -36,6 +37,16 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   entity.expirationTimestamp = event.params.expirationTimestamp
   entity.fee = event.params.fee
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersRepaid = 0
+    orderSummary.totalOrdersDefaulted = 0
+  }
+  orderSummary.totalOrdersCreated = orderSummary.totalOrdersCreated + 1
+  orderSummary.save()
 }
 
 export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
@@ -45,6 +56,17 @@ export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
   entity.orderHash = event.params.orderHash
   entity.valueRepaid = event.params.valueRepaid
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersRepaid = 0
+    orderSummary.totalOrdersDefaulted = 0
+  }
+  orderSummary.totalOrdersRepaid = orderSummary.totalOrdersRepaid + 1
+  orderSummary.save()
+
 }
 
 export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
@@ -54,6 +76,16 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   entity.orderHash = event.params.orderHash
   entity.reason = event.params.reason
   entity.save()
+
+  let orderSummary = OrderSummary.load("1")
+  if (orderSummary == null) {
+    orderSummary = new OrderSummary("1")
+    orderSummary.totalOrdersCreated = 0
+    orderSummary.totalOrdersRepaid = 0
+    orderSummary.totalOrdersDefaulted = 0
+  }
+  orderSummary.totalOrdersDefaulted = orderSummary.totalOrdersDefaulted + 1
+  orderSummary.save()
 }
 
 export function handleLogError(event: LogErrorEvent): void {

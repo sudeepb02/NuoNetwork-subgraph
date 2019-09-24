@@ -95,16 +95,16 @@ type LogAdminRemoved @entity {
 #Kernel schema
 type LogOrderCreated @entity {
   id: ID!
-  orderHash: Bytes! # bytes32
-  account: Bytes! # address
-  principalToken: Bytes! # address
-  collateralToken: Bytes! # address
-  byUser: Bytes! # address
-  principalAmount: BigInt! # uint256
-  collateralAmount: BigInt! # uint256
-  premium: BigInt! # uint256
-  expirationTimestamp: BigInt! # uint256
-  fee: BigInt! # uint256
+  orderHash: Bytes # bytes32
+  account: Bytes # address
+  principalToken: Bytes # address
+  collateralToken: Bytes # address
+  byUser: Bytes # address
+  principalAmount: BigInt # uint256
+  collateralAmount: BigInt # uint256
+  premium: BigInt # uint256
+  expirationTimestamp: BigInt # uint256
+  fee: BigInt # uint256
   tradeAmount: BigInt # uint256
   token: Bytes # address
   value: BigInt # uint256
@@ -248,4 +248,17 @@ type LogTrade @entity {
   _destTokenValue: BigInt! # uint256
   _srcTokenValueLeft: BigInt! # uint256
   _exchangeRate: BigInt! # uint256
+}
+
+#Custom entities
+type User @entity {
+  id: ID! #address of the user
+  numberOfAccounts: Int! #count of user accounts
+}
+
+type OrderSummary @entity {
+  id: ID! #global ID for order summary (1)
+  totalOrdersCreated: Int!
+  totalOrdersRepaid: Int!
+  totalOrdersDefaulted: Int!
 }

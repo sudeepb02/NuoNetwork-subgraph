@@ -8,8 +8,11 @@ import {
   LogAccountCreated,
   LogSetAuthority,
   LogSetOwner,
-  LogNote
+  LogNote,
+  User
 } from "../generated/schema"
+
+import {BigInt} from '@graphprotocol/graph-ts'
 
 export function handleLogAccountCreated(event: LogAccountCreatedEvent): void {
   let entity = new LogAccountCreated(
@@ -19,6 +22,15 @@ export function handleLogAccountCreated(event: LogAccountCreatedEvent): void {
   entity.account = event.params.account
   entity.by = event.params.by
   entity.save()
+
+  let user = User.load(event.params.user.toHexString())
+  if (user == null) {
+    user = new User(event.params.user.toHexString())
+    user.numberOfAccounts = 0
+  }
+  user.numberOfAccounts = user.numberOfAccounts + 1
+  user.save()
+
 }
 
 export function handleLogSetAuthority(event: LogSetAuthorityEvent): void {
