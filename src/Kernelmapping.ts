@@ -7,7 +7,8 @@ import {
   LogErrorWithHintAddress as LogErrorWithHintAddressEvent,
   LogSetAuthority as LogSetAuthorityEvent,
   LogSetOwner as LogSetOwnerEvent,
-  LogNote as LogNoteEvent
+  LogNote as LogNoteEvent,
+  KernelContract as KernelContract
 } from "../generated/KernelContract/KernelContract"
 import {
   LogOrderCreated,
@@ -19,7 +20,8 @@ import {
   LogSetAuthority,
   LogSetOwner,
   LogNote,
-  OrderSummary
+  OrderSummary,
+  User
 } from "../generated/schema"
 
 export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
@@ -38,6 +40,7 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   entity.fee = event.params.fee
   entity.save()
 
+  //Order Summary
   let orderSummary = OrderSummary.load("1")
   if (orderSummary == null) {
     orderSummary = new OrderSummary("1")
@@ -48,6 +51,19 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   }
   orderSummary.totalOrdersCreated = orderSummary.totalOrdersCreated + 1
   orderSummary.save()
+
+  //User
+  let user = User.load(event.params.byUser.toHexString())
+  if (user == null) {
+    user = new User(event.params.byUser.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersCreated = user.totalOrdersCreated + 1
+  user.save()
 }
 
 export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
@@ -69,6 +85,25 @@ export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
   orderSummary.totalOrdersSettled = orderSummary.totalOrdersSettled + 1
   orderSummary.save()
 
+  //Get the contract address
+  let contract = KernelContract.bind(event.address)
+
+  //Get the order details using the getOrder() contract function
+  let orderDetails = contract.getOrder(event.params.orderHash)
+
+  //User
+  let user = User.load(orderDetails.value1.toHexString())
+  if (user == null) {
+    user = new User(orderDetails.value1.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersSettled = user.totalOrdersSettled + 1
+  user.save()
+
 }
 
 export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
@@ -89,6 +124,25 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   }
   orderSummary.totalOrdersDefaulted = orderSummary.totalOrdersDefaulted + 1
   orderSummary.save()
+
+  //Get the contract address
+  let contract = KernelContract.bind(event.address)
+
+  //Get the order details using the getOrder() contract function
+  let orderDetails = contract.getOrder(event.params.orderHash)
+
+  //User
+  let user = User.load(orderDetails.value1.toHexString())
+  if (user == null) {
+    user = new User(orderDetails.value1.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersDefaulted = user.totalOrdersDefaulted + 1
+  user.save()
 }
 
 export function handleLogError(event: LogErrorEvent): void {

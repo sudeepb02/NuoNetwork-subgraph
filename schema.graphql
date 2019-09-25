@@ -254,6 +254,11 @@ type LogTrade @entity {
 type User @entity {
   id: ID! #address of the user
   numberOfAccounts: Int! #count of user accounts
+  totalOrdersCreated: Int!
+  totalOrdersSettled: Int!
+  totalOrdersDefaulted: Int!
+  totalOrdersLiquidated: Int!
+  userCredibility: Int #Credibility of the user for future loans
 }
 
 type OrderSummary @entity {

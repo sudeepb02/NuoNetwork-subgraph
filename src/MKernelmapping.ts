@@ -10,7 +10,8 @@ import {
   LogErrorWithHintAddress as LogErrorWithHintAddressEvent,
   LogSetAuthority as LogSetAuthorityEvent,
   LogSetOwner as LogSetOwnerEvent,
-  LogNote as LogNoteEvent
+  LogNote as LogNoteEvent,
+  MKernelContract as MKernelContract
 } from "../generated/MKernelContract/MKernelContract"
 import {
   LogOrderCreated,
@@ -25,7 +26,8 @@ import {
   LogSetAuthority,
   LogSetOwner,
   LogNote,
-  OrderSummary
+  OrderSummary,
+  User
 } from "../generated/schema"
 
 export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
@@ -47,6 +49,25 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   }
   orderSummary.totalOrdersCreated = orderSummary.totalOrdersCreated + 1
   orderSummary.save()
+
+  //Get the contract address
+  let contract = MKernelContract.bind(event.address)
+
+  //Get the order details using the getOrder() contract function
+  let orderDetails = contract.getOrder(event.params.orderHash)
+
+  //User
+  let user = User.load(orderDetails.value1.toHexString())
+  if (user == null) {
+    user = new User(orderDetails.value1.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersCreated = user.totalOrdersCreated + 1
+  user.save()
 }
 
 export function handleLogOrderLiquidatedByUser(
@@ -69,6 +90,20 @@ export function handleLogOrderLiquidatedByUser(
   orderSummary.totalOrdersLiquidated = orderSummary.totalOrdersLiquidated + 1
   orderSummary.save()
 
+  let contract = MKernelContract.bind(event.address)
+  let orderDetails = contract.getOrder(event.params.orderHash)
+
+  let user = User.load(orderDetails.value1.toHexString())
+  if (user == null) {
+    user = new User(orderDetails.value1.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersLiquidated = user.totalOrdersLiquidated + 1
+  user.save()
 }
 
 export function handleLogOrderStoppedAtProfit(
@@ -99,6 +134,20 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   }
   orderSummary.totalOrdersDefaulted = orderSummary.totalOrdersDefaulted + 1
   orderSummary.save()
+
+  let contract = MKernelContract.bind(event.address)
+  let orderDetails = contract.getOrder(event.params.orderHash)
+  let user = User.load(orderDetails.value1.toHexString())
+  if (user == null) {
+    user = new User(orderDetails.value1.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersDefaulted = user.totalOrdersDefaulted + 1
+  user.save()
 }
 
 export function handleLogNoActionPerformed(
@@ -133,6 +182,22 @@ export function handleLogOrderSettlement(event: LogOrderSettlementEvent): void {
   }
   orderSummary.totalOrdersSettled = orderSummary.totalOrdersSettled + 1
   orderSummary.save()
+
+  let contract = MKernelContract.bind(event.address)
+  let orderDetails = contract.getOrder(event.params.orderHash)
+
+  //User
+  let user = User.load(orderDetails.value1.toHexString())
+  if (user == null) {
+    user = new User(orderDetails.value1.toHexString())
+    user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
+  }
+  user.totalOrdersSettled = user.totalOrdersSettled + 1
+  user.save()
 }
 
 export function handleLogError(event: LogErrorEvent): void {
