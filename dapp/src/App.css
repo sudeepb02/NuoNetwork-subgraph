@@ -1,0 +1,11 @@
+.App {
+  background-color: #202225;
+  height: 100vh;
+  color: #dcddde;
+  font-weight: bold;
+  padding: 40px 200px;
+}
+
+.headline {
+  font-weight: bold;
+}
