@@ -1,0 +1,23 @@
+.summary-item {
+    width: 20%;
+    border: 1px solid white;
+    background-color: #30343b;
+    min-height: 200px;
+    border-radius: 4px;
+    margin: 0px 10px;
+}
+
+.order-summary {
+    width: 1200px;
+    max-width: 1200px;
+}
+
+.item-header {
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+.item-value {
+   color: #53B167;
+   font-size: 36px;
+}
