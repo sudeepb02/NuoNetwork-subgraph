@@ -1,5 +1,6 @@
 import React from 'react';
 import OrderSummary from "./components/OrderSummary";
+import UserAnalysis from "./components/UserAnalysis";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./client";
 import logo from './logo.svg';
@@ -10,7 +11,7 @@ function App() {
     <ApolloProvider client={client}>
       <div className="App d-flex flex-column">
         <OrderSummary />
-        <div>under</div>
+        <UserAnalysis />
       </div>
 
     </ApolloProvider>
