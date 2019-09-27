@@ -36,7 +36,7 @@ function CollateralAnalysis() {
   return (
     <div className="d-flex flex-column mt-5">
       <h1 className="headline">Collateral Analysis</h1>
-      <div className="subnote-text ml-1">Last 1,000 orders...most "None and Other" values are likely Lend orders where no collateral is required</div>
+      <div className="subnote-text ml-1">Last 1,000 orders...most <i>None or Other</i> values are likely <i>Lend</i> orders where no collateral is required</div>
 
       <Query query={GET_ORDER_CREATEDS}>
         {({ loading, error, data, fetchMore }) => {
