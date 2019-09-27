@@ -24,6 +24,8 @@ import {
   User
 } from "../generated/schema"
 
+import { log, BigInt } from '@graphprotocol/graph-ts'
+
 export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   let entity = new LogOrderCreated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
@@ -52,11 +54,19 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   orderSummary.totalOrdersCreated = orderSummary.totalOrdersCreated + 1
   orderSummary.save()
 
+  //Log the message
+  log.info(
+    'totalOrdersCreated for OrderSummary incremented, Block number: {}, User address: {}',
+    [
+      event.block.number.toString(),
+      event.params.byUser.toHexString()
+    ]
+  )
+
   //User
   let user = User.load(event.params.byUser.toHexString())
   if (user == null) {
     user = new User(event.params.byUser.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -64,6 +74,14 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   }
   user.totalOrdersCreated = user.totalOrdersCreated + 1
   user.save()
+
+  log.debug(
+    'totalOrdersCreated for User incremented, Block number: {}, User address: {}',
+    [
+      event.block.number.toString(),
+      event.params.byUser.toHexString()
+    ]
+  )
 }
 
 export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
@@ -95,7 +113,6 @@ export function handleLogOrderRepaid(event: LogOrderRepaidEvent): void {
   let user = User.load(orderDetails.value1.toHexString())
   if (user == null) {
     user = new User(orderDetails.value1.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -135,7 +152,6 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   let user = User.load(orderDetails.value1.toHexString())
   if (user == null) {
     user = new User(orderDetails.value1.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -143,6 +159,7 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   }
   user.totalOrdersDefaulted = user.totalOrdersDefaulted + 1
   user.save()
+  
 }
 
 export function handleLogError(event: LogErrorEvent): void {
