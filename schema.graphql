@@ -267,3 +267,9 @@ type OrderSummary @entity {
   totalOrdersDefaulted: Int!
   totalOrdersLiquidated: Int!
 }
+
+type TradeSummary @entity {
+  id: ID! #global id for Trade Summary (1)
+  kyberTrades: Int!
+  uniswapTrades: Int!
+}
