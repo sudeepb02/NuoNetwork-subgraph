@@ -1,6 +1,7 @@
 import React from 'react';
 import OrderSummary from "./components/OrderSummary";
-import UserAnalysis from "./components/UserAnalysis";
+import CollateralAnalysis from "./components/CollateralAnalysis";
+import DefaultReasons from "./components/DefaultReasons";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./client";
 import logo from './logo.svg';
@@ -10,8 +11,13 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div className="App d-flex flex-column">
+        <h4 className="ml-1 mb-3 font-weight-bold">
+          Nuo Network Subgraph
+        </h4>
+        <div className="my-4"/>
         <OrderSummary />
-        <UserAnalysis />
+        <CollateralAnalysis />
+        <DefaultReasons />
       </div>
 
     </ApolloProvider>
