@@ -9,6 +9,7 @@ dataSources:
     source:
       address: "0x78b37409628e10df0b661c6b205b872a4df8dd6e"
       abi: AccountContract
+      startBlock: 7782764
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -53,6 +54,7 @@ dataSources:
     source:
       address: "0xf5a38fbc26c720c79350b99d9c0bd42b3e9b8316"
       abi: AccountFactoryContract
+      startBlock: 7951325
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -82,6 +84,7 @@ dataSources:
     source:
       address: "0x4e9d7f37eadc6fef64b5f5dccc4deb6224667677"
       abi: AccountFactoryV2Contract
+      startBlock: 8111524
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -111,6 +114,7 @@ dataSources:
     source:
       address: "0x431f429035a1e3059d5c6a9a83208c6d3143d925"
       abi: ConfigContract
+      startBlock: 7255236
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -143,6 +147,7 @@ dataSources:
     source:
       address: "0x8dc3bcbb4b506fa2becd065ff4425dee32f156a6"
       abi: KernelContract
+      startBlock: 7889456
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -187,6 +192,7 @@ dataSources:
     source:
       address: "0x740f8b58f5562c8379f2a8c2230c9be5c03ac3fc"
       abi: MKernelContract
+      startBlock: 7652153
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -240,6 +246,7 @@ dataSources:
     source:
       address: "0x64d14595152b430cf6940da15c6e39545c7c5b7e"
       abi: ReserveContract
+      startBlock: 7556213
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -299,6 +306,7 @@ dataSources:
     source:
       address: "0xde4a88ef731cc55450c76e9307a64e94146006f7"
       abi: DSGuardContract
+      startBlock: 7910101
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -328,6 +336,7 @@ dataSources:
     source:
       address: "0x802275979b020f0ec871c5ec1db6e412b72ff20b"
       abi: ReserveEscrowContract
+      startBlock: 8000213
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -360,6 +369,7 @@ dataSources:
     source:
       address: "0xaf38668f4719ecf9452dc0300be3f6c83cbf3721"
       abi: KernelEscrowContract
+      startBlock: 8019999
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -392,6 +402,7 @@ dataSources:
     source:
       address: "0x521550e569bc80f1b4957c4f3fd3d677d9ca31f1"
       abi: KyberConnectorContract
+      startBlock: 7599999
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -421,6 +432,7 @@ dataSources:
     source:
       address: "0x9550050d102ff42a2a683a9fa23b8f3fb2b378c8"
       abi: UniswapConnectorContract
+      startBlock: 7999999
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
