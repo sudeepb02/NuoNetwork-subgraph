@@ -27,6 +27,10 @@ export function handleLogAccountCreated(event: LogAccountCreatedEvent): void {
   if (user == null) {
     user = new User(event.params.user.toHexString())
     user.numberOfAccounts = 0
+    user.totalOrdersCreated = 0
+    user.totalOrdersSettled = 0
+    user.totalOrdersDefaulted = 0
+    user.totalOrdersLiquidated = 0
   }
   user.numberOfAccounts = user.numberOfAccounts + 1
   user.save()

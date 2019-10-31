@@ -179,6 +179,7 @@ export function handleLogOrderSettlement(event: LogOrderSettlementEvent): void {
     orderSummary.totalOrdersCreated = 0
     orderSummary.totalOrdersSettled = 0
     orderSummary.totalOrdersDefaulted = 0
+    orderSummary.totalOrdersLiquidated = 0
   }
   orderSummary.totalOrdersSettled = orderSummary.totalOrdersSettled + 1
   orderSummary.save()
