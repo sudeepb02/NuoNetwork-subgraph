@@ -30,6 +30,8 @@ import {
   User
 } from "../generated/schema"
 
+import { log } from '@graphprotocol/graph-ts'
+
 export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   let entity = new LogOrderCreated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
@@ -60,7 +62,6 @@ export function handleLogOrderCreated(event: LogOrderCreatedEvent): void {
   let user = User.load(orderDetails.value1.toHexString())
   if (user == null) {
     user = new User(orderDetails.value1.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -96,7 +97,6 @@ export function handleLogOrderLiquidatedByUser(
   let user = User.load(orderDetails.value1.toHexString())
   if (user == null) {
     user = new User(orderDetails.value1.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -140,7 +140,6 @@ export function handleLogOrderDefaulted(event: LogOrderDefaultedEvent): void {
   let user = User.load(orderDetails.value1.toHexString())
   if (user == null) {
     user = new User(orderDetails.value1.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -191,7 +190,6 @@ export function handleLogOrderSettlement(event: LogOrderSettlementEvent): void {
   let user = User.load(orderDetails.value1.toHexString())
   if (user == null) {
     user = new User(orderDetails.value1.toHexString())
-    user.numberOfAccounts = 0
     user.totalOrdersCreated = 0
     user.totalOrdersSettled = 0
     user.totalOrdersDefaulted = 0
@@ -199,6 +197,7 @@ export function handleLogOrderSettlement(event: LogOrderSettlementEvent): void {
   }
   user.totalOrdersSettled = user.totalOrdersSettled + 1
   user.save()
+
 }
 
 export function handleLogError(event: LogErrorEvent): void {

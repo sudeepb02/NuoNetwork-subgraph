@@ -1,9 +1,13 @@
 .App {
-  background-color: #202225;
   height: 100vh;
   color: #dcddde;
   font-weight: bold;
   padding: 40px 200px;
+}
+
+body {
+  background-color: #202225;
+
 }
 
 .headline {

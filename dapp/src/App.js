@@ -1,5 +1,7 @@
 import React from 'react';
 import OrderSummary from "./components/OrderSummary";
+import CollateralAnalysis from "./components/CollateralAnalysis";
+import DefaultReasons from "./components/DefaultReasons";
 import UserAnalysis from "./components/UserAnalysis";
 import { ApolloProvider } from "react-apollo";
 import { client } from "./client";
@@ -10,8 +12,14 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div className="App d-flex flex-column">
-        <OrderSummary />
+        <h4 className="ml-1 mb-3 font-weight-bold">
+          Nuo Network Subgraph
+        </h4>
+        <div className="my-4"/>
         <UserAnalysis />
+        <OrderSummary />
+        <CollateralAnalysis />
+        <DefaultReasons />
       </div>
 
     </ApolloProvider>

@@ -22,7 +22,7 @@ export function handleLogAccountCreated(event: LogAccountCreatedEvent): void {
   entity.account = event.params.account
   entity.by = event.params.by
   entity.save()
-
+/*
   let user = User.load(event.params.user.toHexString())
   if (user == null) {
     user = new User(event.params.user.toHexString())
@@ -34,7 +34,7 @@ export function handleLogAccountCreated(event: LogAccountCreatedEvent): void {
   }
   user.numberOfAccounts = user.numberOfAccounts + 1
   user.save()
-
+*/
 }
 
 export function handleLogSetAuthority(event: LogSetAuthorityEvent): void {

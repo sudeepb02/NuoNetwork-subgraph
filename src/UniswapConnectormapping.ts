@@ -24,6 +24,15 @@ export function handleLogTrade(event: LogTradeEvent): void {
   entity._srcTokenValueLeft = event.params._srcTokenValueLeft
   entity._exchangeRate = event.params._exchangeRate
   entity.save()
+
+  let tradeSummary = TradeSummary.load("1")
+  if (tradeSummary == null) {
+    tradeSummary = new TradeSummary("1")
+    tradeSummary.kyberTrades = 0
+    tradeSummary.uniswapTrades = 0
+  }
+  tradeSummary.uniswapTrades = tradeSummary.uniswapTrades + 1
+  tradeSummary.save()
 }
 
 export function handleLogSetAuthority(event: LogSetAuthorityEvent): void {
